@@ -1,4 +1,6 @@
-﻿namespace RathnaBookStore.API.Models.Domains
+﻿using System.Text.Json.Serialization;
+
+namespace RathnaBookStore.API.Models.Domains
 {
     public class OrderItem
     {
@@ -6,6 +8,8 @@
 
         //Foreign Keys
         public Guid OrderId { get; set; }
+
+        [JsonIgnore]
         public Order Order { get; set; }
 
         public Guid BookId { get; set; }

@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using RathnaBookStore.API.Data;
 using RathnaBookStore.API.Mappings;
+using RathnaBookStore.API.Repositories.BookRepository;
 using RathnaBookStore.API.Repositories.CategoryRepository;
+using RathnaBookStore.API.Repositories.OrderRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,8 @@ builder.Services.AddDbContext<BookStoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BookStoreConnectionString")));
 
 builder.Services.AddScoped<ICategoryRepository, SQLCategoryRepository>();
+builder.Services.AddScoped<IBookRepository, SQLBookRepository>();
+builder.Services.AddScoped<IOrderRepository, SQLOrderRepository>();
 
 //config automapper
 builder.Services.AddAutoMapper(config =>
