@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RathnaBookStore.API.Data;
@@ -41,6 +42,7 @@ namespace RathnaBookStore.API.Controllers
 
         //Get All categories
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetCategories()
         {
             //Get categories from repository
@@ -54,6 +56,7 @@ namespace RathnaBookStore.API.Controllers
 
         //Update category
         [HttpPut]
+        [Authorize]
         [Route("{id}")]
         public async Task<IActionResult> UpdateCategory([FromRoute] Guid id, [FromBody] UpdateCategoryRequestDto updateCategoryRequestDto)
         {
@@ -76,6 +79,7 @@ namespace RathnaBookStore.API.Controllers
 
         //Delete Category
         [HttpDelete]
+        [Authorize]
         [Route("{id}")]
         public async Task<IActionResult> DeleteCategory([FromRoute] Guid id)
         {

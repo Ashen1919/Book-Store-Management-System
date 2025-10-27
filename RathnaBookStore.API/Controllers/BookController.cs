@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RathnaBookStore.API.Data;
@@ -25,6 +26,7 @@ namespace RathnaBookStore.API.Controllers
 
         //Create a book
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateBook([FromBody] AddBookRequestDto addBookRequestDto)
         {
             //Map Dto to domain model
@@ -41,6 +43,7 @@ namespace RathnaBookStore.API.Controllers
 
         //Get All Books
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllBooks([FromQuery] string? filterOn, [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy, [FromQuery] bool? isAscending,
             [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 1000)
@@ -56,6 +59,7 @@ namespace RathnaBookStore.API.Controllers
 
         //Update Books
         [HttpPut]
+        [Authorize]
         [Route("{id}")]
         public async Task<IActionResult> UpdateBooks([FromRoute] Guid id, UpdateBookRequestDto updateBookRequestDto)
         {
@@ -75,6 +79,7 @@ namespace RathnaBookStore.API.Controllers
 
         //Delete Book
         [HttpDelete]
+        [Authorize]
         [Route("{id}")]
         public async Task<IActionResult> DeleteBook([FromRoute] Guid id)
         {
@@ -92,6 +97,7 @@ namespace RathnaBookStore.API.Controllers
 
         //Get Book by ID
         [HttpGet]
+        [Authorize]
         [Route("{id}")]
         public async Task<IActionResult> GetBooksById([FromRoute] Guid id)
         {

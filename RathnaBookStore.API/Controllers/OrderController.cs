@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,7 @@ namespace RathnaBookStore.API.Controllers
 
         //Get All Orders
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetOrders(
             [FromQuery] DateTime? filterStartDate = null,
             [FromQuery] DateTime? filterEndDate = null,
@@ -45,6 +47,7 @@ namespace RathnaBookStore.API.Controllers
 
         //Get Orders By Id
         [HttpGet]
+        [Authorize]
         [Route("{id}")]
         public async Task<IActionResult> GetOrdersById([FromRoute] Guid id)
         {
@@ -62,6 +65,7 @@ namespace RathnaBookStore.API.Controllers
 
         //Create Order
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderDto createOrderDto)
         {
             //Validate books are exist and get their prices
@@ -108,6 +112,7 @@ namespace RathnaBookStore.API.Controllers
 
         //Update Order
         [HttpPut]
+        [Authorize]
         [Route("{id}")]
         public async Task<IActionResult> UpdateOrder([FromRoute] Guid id, [FromBody] UpdateOrderDto updateOrderDto)
         {
