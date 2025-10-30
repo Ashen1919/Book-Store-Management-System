@@ -1,9 +1,0 @@
-rathnabookstore.azurecr.io
-
-rathnaBookStore
-
-DL0sb8F7jlFComgonNCmJ8y/rIaUcGlCMwQsXFYJ78+ACRBz/PGg
-
-vD5qBQ9jH3Tw6UtziA2LN3EyEoTAxgv5YEzUdHEwGA+ACRCSn6aA
-
-https://rathnabookstore-exarg6cbbtckcbb6.canadacentral-01.azurewebsites.net/
