@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using RathnaBookStore.API.Data;
 using RathnaBookStore.API.Models.DTO.LoginDto;
 using RathnaBookStore.API.Repositories.Auth_Repository;
 
@@ -42,30 +43,40 @@ namespace RathnaBookStore.API.Controllers
         }
 
         //Login User
-        [HttpPost]
-        [Route("Login")]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
         {
-            var user = await userManager.FindByEmailAsync(loginRequestDto.Email);
-
-            if (user != null) 
+            try
             {
-                var checkPasswordResult = await userManager.CheckPasswordAsync(user, loginRequestDto.Password);
+                var user = await userManager.FindByEmailAsync(loginRequestDto.Email);
 
-                if (checkPasswordResult)
+                if (user != null && await userManager.CheckPasswordAsync(user, loginRequestDto.Password))
                 {
                     var jwtToken = tokenRepository.CreateJwtToken(user);
-
-                    var response = new LoginResponseDto
-                    {
-                        JwtToken = jwtToken
-                    };
-
-                    return Ok(response);
+                    return Ok(new LoginResponseDto { JwtToken = jwtToken });
                 }
-            }
 
-            return BadRequest("Email or Password in incorrect");
+                return BadRequest("Invalid email or password.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message, stack = ex.StackTrace });
+            }
+        }
+
+        //check database is connected
+        [HttpGet("test-db-connection")]
+        public async Task<IActionResult> TestDbConnection([FromServices] BookStoreAuthDbContext context)
+        {
+            try
+            {
+                await context.Database.CanConnectAsync();
+                return Ok("✅ Database connection successful!");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message, stack = ex.StackTrace });
+            }
         }
     }
 }
